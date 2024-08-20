@@ -64,8 +64,7 @@ internal static class TypeHelpers
                 if (type.IsSZArray)
                 {
                     var elementType = type.GetElementType();
-                    bool containsReference = (bool)(isReferenceOrContainsReferences.MakeGenericMethod(elementType!).Invoke(null, null)!);
-                    if (!containsReference)
+                    if (Helpers.IsUnmanagedPackable(elementType!))
                     {
                         IsUnmanagedSZArray = true;
                         UnmanagedSZArrayElementSize = (int)unsafeSizeOf.MakeGenericMethod(elementType!).Invoke(null, null)!;

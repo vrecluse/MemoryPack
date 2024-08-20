@@ -28,7 +28,7 @@ public static partial class MemoryPackSerializer
 #endif
         T>(ReadOnlySpan<byte> buffer, ref T? value, MemoryPackSerializerOptions? options = default)
     {
-        if (!RuntimeHelpers.IsReferenceOrContainsReferences<T>())
+        if (Helpers.IsUnmanagedPackable<T?>())
         {
             if (buffer.Length < Unsafe.SizeOf<T>())
             {

@@ -13,7 +13,7 @@ public sealed class NullableFormatter<T> : MemoryPackFormatter<T?>
     [Preserve]
     public override void Serialize<TBufferWriter>(ref MemoryPackWriter<TBufferWriter> writer, scoped ref T? value)
     {
-        if (!RuntimeHelpers.IsReferenceOrContainsReferences<T>())
+        if (Helpers.IsUnmanagedPackable<T?>())
         {
             writer.DangerousWriteUnmanaged(value);
             return;
@@ -35,7 +35,7 @@ public sealed class NullableFormatter<T> : MemoryPackFormatter<T?>
     [Preserve]
     public override void Deserialize(ref MemoryPackReader reader, scoped ref T? value)
     {
-        if (!RuntimeHelpers.IsReferenceOrContainsReferences<T>())
+        if (Helpers.IsUnmanagedPackable<T?>())
         {
             reader.DangerousReadUnmanaged(out value);
             return;

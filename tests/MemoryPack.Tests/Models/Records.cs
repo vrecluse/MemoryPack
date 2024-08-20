@@ -7,10 +7,21 @@ using System.Threading.Tasks;
 namespace MemoryPack.Tests.Models;
 
 [MemoryPackable]
+[PackAsManagedType]
 public partial struct UnmanagedStruct
 {
     public int X;
     public int Y;
+    public int Z;
+}
+
+[MemoryPackable]
+[PackAsManagedType]
+public partial struct UnmanagedPackAsManagedStruct
+{
+    public int X;
+    public int Y;
+    [MemoryPackIgnore]
     public int Z;
 }
 

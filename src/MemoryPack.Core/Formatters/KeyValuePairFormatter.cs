@@ -18,7 +18,7 @@ public static class KeyValuePairFormatter
         where TBufferWriter : class, IBufferWriter<byte>
 #endif
     {
-        if (!System.Runtime.CompilerServices.RuntimeHelpers.IsReferenceOrContainsReferences<KeyValuePair<TKey?, TValue?>>())
+        if (Helpers.IsUnmanagedPackable<TKey?, TValue?>())
         {
             writer.DangerousWriteUnmanaged(value);
             return;
@@ -33,7 +33,7 @@ public static class KeyValuePairFormatter
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static void Deserialize<TKey, TValue>(IMemoryPackFormatter<TKey> keyFormatter, IMemoryPackFormatter<TValue> valueFormatter, ref MemoryPackReader reader, out TKey? key, out TValue? value)
     {
-        if (!System.Runtime.CompilerServices.RuntimeHelpers.IsReferenceOrContainsReferences<KeyValuePair<TKey?, TValue?>>())
+        if (Helpers.IsUnmanagedPackable<TKey?, TValue?>())
         {
             reader.DangerousReadUnmanaged(out KeyValuePair<TKey?, TValue?> kvp);
             key = kvp.Key;
@@ -54,7 +54,7 @@ public sealed class KeyValuePairFormatter<TKey, TValue> : MemoryPackFormatter<Ke
     [Preserve]
     public override void Serialize<TBufferWriter>(ref MemoryPackWriter<TBufferWriter> writer, scoped ref KeyValuePair<TKey?, TValue?> value)
     {
-        if (!System.Runtime.CompilerServices.RuntimeHelpers.IsReferenceOrContainsReferences<KeyValuePair<TKey?, TValue?>>())
+        if (Helpers.IsUnmanagedPackable<TKey?, TValue?>())
         {
             writer.DangerousWriteUnmanaged(value);
             return;
@@ -67,7 +67,7 @@ public sealed class KeyValuePairFormatter<TKey, TValue> : MemoryPackFormatter<Ke
     [Preserve]
     public override void Deserialize(ref MemoryPackReader reader, scoped ref KeyValuePair<TKey?, TValue?> value)
     {
-        if (!System.Runtime.CompilerServices.RuntimeHelpers.IsReferenceOrContainsReferences<KeyValuePair<TKey?, TValue?>>())
+        if (Helpers.IsUnmanagedPackable<TKey?, TValue?>())
         {
             reader.DangerousReadUnmanaged(out value);
             return;

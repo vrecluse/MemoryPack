@@ -453,7 +453,7 @@ public ref partial struct MemoryPackWriter<TBufferWriter>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public void WriteArray<T>(T?[]? value)
     {
-        if (!RuntimeHelpers.IsReferenceOrContainsReferences<T>())
+        if (Helpers.IsUnmanagedPackable<T>())
         {
             DangerousWriteUnmanagedArray(value);
             return;
@@ -476,7 +476,7 @@ public ref partial struct MemoryPackWriter<TBufferWriter>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public void WriteSpan<T>(scoped Span<T?> value)
     {
-        if (!RuntimeHelpers.IsReferenceOrContainsReferences<T>())
+        if (Helpers.IsUnmanagedPackable<T>())
         {
             DangerousWriteUnmanagedSpan(value);
             return;
@@ -493,7 +493,7 @@ public ref partial struct MemoryPackWriter<TBufferWriter>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public void WriteSpan<T>(scoped ReadOnlySpan<T?> value)
     {
-        if (!RuntimeHelpers.IsReferenceOrContainsReferences<T>())
+        if (Helpers.IsUnmanagedPackable<T>())
         {
             DangerousWriteUnmanagedSpan(value);
             return;
@@ -516,7 +516,7 @@ public ref partial struct MemoryPackWriter<TBufferWriter>
         return;
 #else
 
-        if (!RuntimeHelpers.IsReferenceOrContainsReferences<T>())
+        if (Helpers.IsUnmanagedPackable<T>())
         {
             DangerousWriteUnmanagedArray(value);
             return;
@@ -544,7 +544,7 @@ public ref partial struct MemoryPackWriter<TBufferWriter>
         WriteSpan(value);
         return;
 #else
-        if (!RuntimeHelpers.IsReferenceOrContainsReferences<T>())
+        if (Helpers.IsUnmanagedPackable<T>())
         {
             DangerousWriteUnmanagedSpan(value);
             return;
@@ -566,7 +566,7 @@ public ref partial struct MemoryPackWriter<TBufferWriter>
         WriteSpan(value);
         return;
 #else
-        if (!RuntimeHelpers.IsReferenceOrContainsReferences<T>())
+        if (Helpers.IsUnmanagedPackable<T>())
         {
             DangerousWriteUnmanagedSpan(value);
             return;
@@ -681,7 +681,7 @@ public ref partial struct MemoryPackWriter<TBufferWriter>
     {
         if (value.Length == 0) return;
 
-        if (!RuntimeHelpers.IsReferenceOrContainsReferences<T>())
+        if (Helpers.IsUnmanagedPackable<T>())
         {
             var srcLength = Unsafe.SizeOf<T>() * value.Length;
             ref var dest = ref GetSpanReference(srcLength);

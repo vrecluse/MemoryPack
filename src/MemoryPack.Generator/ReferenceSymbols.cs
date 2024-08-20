@@ -24,7 +24,9 @@ public class ReferenceSymbols
     public INamedTypeSymbol MemoryPackOnDeserializedAttribute { get; }
     public INamedTypeSymbol SkipOverwriteDefaultAttribute { get; }
     public INamedTypeSymbol GenerateTypeScriptAttribute { get; }
+    public INamedTypeSymbol PackAsManagedTypeAttribute { get; }
     public INamedTypeSymbol IMemoryPackable { get; }
+    public INamedTypeSymbol IAsManagedPackable { get; }
 
     public WellKnownTypes KnownTypes { get; }
 
@@ -49,6 +51,8 @@ public class ReferenceSymbols
         MemoryPackOnDeserializedAttribute = GetTypeByMetadataName("MemoryPack.MemoryPackOnDeserializedAttribute");
         SkipOverwriteDefaultAttribute = GetTypeByMetadataName("MemoryPack.SuppressDefaultInitializationAttribute");
         GenerateTypeScriptAttribute = GetTypeByMetadataName(MemoryPackGenerator.GenerateTypeScriptAttributeFullName);
+        PackAsManagedTypeAttribute = GetTypeByMetadataName("MemoryPack.PackAsManagedTypeAttribute");
+        IAsManagedPackable = GetTypeByMetadataName("MemoryPack.IAsManagedPackable");
         IMemoryPackable = GetTypeByMetadataName("MemoryPack.IMemoryPackable`1").ConstructUnboundGenericType();
         KnownTypes = new WellKnownTypes(this);
     }

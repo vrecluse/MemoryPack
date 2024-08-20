@@ -29,3 +29,7 @@ public interface IMemoryPackable<T> : IMemoryPackFormatterRegister
     static abstract void Deserialize(ref MemoryPackReader reader, scoped ref T? value);
 #endif
 }
+
+public interface IAsManagedPackable
+{
+}

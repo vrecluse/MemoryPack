@@ -26,7 +26,7 @@ public sealed class TwoDimensionalArrayFormatter<T> : MemoryPackFormatter<T?[,]>
         writer.WriteUnmanaged(i, j);
 
 #if NET7_0_OR_GREATER
-        if (!RuntimeHelpers.IsReferenceOrContainsReferences<T?>())
+        if (Helpers.IsUnmanagedPackable<T?>())
         {
             var byteCount = Unsafe.SizeOf<T>() * i * j;
             ref var src = ref MemoryMarshal.GetArrayDataReference(value);
@@ -81,7 +81,7 @@ public sealed class TwoDimensionalArrayFormatter<T> : MemoryPackFormatter<T?[,]>
         }
 
 #if NET7_0_OR_GREATER
-        if (!RuntimeHelpers.IsReferenceOrContainsReferences<T?>())
+        if (Helpers.IsUnmanagedPackable<T?>())
         {
             var byteCount = Unsafe.SizeOf<T>() * iLength * jLength;
             ref var dest = ref MemoryMarshal.GetArrayDataReference(value);
@@ -138,7 +138,7 @@ public sealed class ThreeDimensionalArrayFormatter<T> : MemoryPackFormatter<T?[,
         writer.WriteUnmanaged(i, j, k);
 
 #if NET7_0_OR_GREATER
-        if (!RuntimeHelpers.IsReferenceOrContainsReferences<T?>())
+        if (Helpers.IsUnmanagedPackable<T?>())
         {
             var byteCount = Unsafe.SizeOf<T>() * i * j * k;
             ref var src = ref MemoryMarshal.GetArrayDataReference(value);
@@ -192,7 +192,7 @@ public sealed class ThreeDimensionalArrayFormatter<T> : MemoryPackFormatter<T?[,
         }
 
 #if NET7_0_OR_GREATER
-        if (!RuntimeHelpers.IsReferenceOrContainsReferences<T?>())
+        if (Helpers.IsUnmanagedPackable<T?>())
         {
             var byteCount = Unsafe.SizeOf<T>() * iLength * jLength * kLength;
             ref var dest = ref MemoryMarshal.GetArrayDataReference(value);
@@ -257,7 +257,7 @@ public sealed class FourDimensionalArrayFormatter<T> : MemoryPackFormatter<T?[,,
         writer.WriteUnmanaged(i, j, k, l);
 
 #if NET7_0_OR_GREATER
-        if (!RuntimeHelpers.IsReferenceOrContainsReferences<T?>())
+        if (Helpers.IsUnmanagedPackable<T?>())
         {
             var byteCount = Unsafe.SizeOf<T>() * i * j * k * l;
             ref var src = ref MemoryMarshal.GetArrayDataReference(value);
@@ -311,7 +311,7 @@ public sealed class FourDimensionalArrayFormatter<T> : MemoryPackFormatter<T?[,,
         }
 
 #if NET7_0_OR_GREATER
-        if (!RuntimeHelpers.IsReferenceOrContainsReferences<T?>())
+        if (Helpers.IsUnmanagedPackable<T?>())
         {
             var byteCount = Unsafe.SizeOf<T>() * iLength * jLength * kLength * lLength;
             ref var dest = ref MemoryMarshal.GetArrayDataReference(value);

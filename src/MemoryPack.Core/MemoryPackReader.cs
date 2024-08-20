@@ -554,7 +554,7 @@ public ref partial struct MemoryPackReader
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public void ReadArray<T>(scoped ref T?[]? value)
     {
-        if (!RuntimeHelpers.IsReferenceOrContainsReferences<T>())
+        if (IsUnmanagedPackable<T>())
         {
             DangerousReadUnmanagedArray(ref value);
             return;
@@ -588,7 +588,7 @@ public ref partial struct MemoryPackReader
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public void ReadSpan<T>(scoped ref Span<T?> value)
     {
-        if (!RuntimeHelpers.IsReferenceOrContainsReferences<T>())
+        if (IsUnmanagedPackable<T>())
         {
             DangerousReadUnmanagedSpan(ref value);
             return;
@@ -635,7 +635,7 @@ public ref partial struct MemoryPackReader
         ReadArray(ref value);
         return;
 #else
-        if (!RuntimeHelpers.IsReferenceOrContainsReferences<T>())
+        if (IsUnmanagedPackable<T>())
         {
             DangerousReadUnmanagedArray(ref value);
             return;
@@ -674,7 +674,7 @@ public ref partial struct MemoryPackReader
         ReadSpan(ref value);
         return;
 #else
-        if (!RuntimeHelpers.IsReferenceOrContainsReferences<T>())
+        if (IsUnmanagedPackable<T>())
         {
             DangerousReadUnmanagedSpan(ref value);
             return;
@@ -818,7 +818,7 @@ public ref partial struct MemoryPackReader
             return;
         }
 
-        if (!RuntimeHelpers.IsReferenceOrContainsReferences<T>())
+        if (IsUnmanagedPackable<T>())
         {
             if (value.Length != length)
             {
@@ -861,7 +861,7 @@ public ref partial struct MemoryPackReader
             return;
         }
 
-        if (!RuntimeHelpers.IsReferenceOrContainsReferences<T>())
+        if (IsUnmanagedPackable<T>())
         {
             if (value.Length != length)
             {
@@ -915,5 +915,11 @@ public ref partial struct MemoryPackReader
 
         Advance(byteCount);
         view = span; // safe until call next GetSpanReference
+    }
+
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    private static bool IsUnmanagedPackable<T>()
+    {
+        return Helpers.IsUnmanagedPackable<T>();
     }
 }

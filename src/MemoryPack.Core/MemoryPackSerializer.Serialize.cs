@@ -21,7 +21,7 @@ public static partial class MemoryPackSerializer
 
     public static byte[] Serialize<T>(in T? value, MemoryPackSerializerOptions? options = default)
     {
-        if (!RuntimeHelpers.IsReferenceOrContainsReferences<T>())
+        if (Helpers.IsUnmanagedPackable<T?>())
         {
             var array = AllocateUninitializedArray<byte>(Unsafe.SizeOf<T>());
             Unsafe.WriteUnaligned(ref GetArrayDataReference(array), value);
@@ -92,7 +92,7 @@ public static partial class MemoryPackSerializer
         where TBufferWriter : class, IBufferWriter<byte>
 #endif
     {
-        if (!RuntimeHelpers.IsReferenceOrContainsReferences<T>())
+        if (Helpers.IsUnmanagedPackable<T?>())
         {
             var buffer = bufferWriter.GetSpan(Unsafe.SizeOf<T>());
             Unsafe.WriteUnaligned(ref MemoryMarshal.GetReference(buffer), value);

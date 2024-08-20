@@ -353,7 +353,7 @@ public sealed class ValueTupleFormatter<T1> : MemoryPackFormatter<ValueTuple<T1?
     [Preserve]
     public override void Serialize<TBufferWriter>(ref MemoryPackWriter<TBufferWriter> writer, scoped ref ValueTuple<T1?> value)
     {
-        if (!System.Runtime.CompilerServices.RuntimeHelpers.IsReferenceOrContainsReferences<ValueTuple<T1?>>())
+        if (Helpers.IsUnmanagedPackableTuple<T1>())
         {
             writer.DangerousWriteUnmanaged(value);
             return;
@@ -365,7 +365,7 @@ public sealed class ValueTupleFormatter<T1> : MemoryPackFormatter<ValueTuple<T1?
     [Preserve]
     public override void Deserialize(ref MemoryPackReader reader, scoped ref ValueTuple<T1?> value)
     {
-        if (!System.Runtime.CompilerServices.RuntimeHelpers.IsReferenceOrContainsReferences<ValueTuple<T1?>>())
+        if (Helpers.IsUnmanagedPackableTuple<T1>())
         {
             reader.DangerousReadUnmanaged(out value);
             return;
@@ -383,7 +383,7 @@ public sealed class ValueTupleFormatter<T1, T2> : MemoryPackFormatter<ValueTuple
     [Preserve]
     public override void Serialize<TBufferWriter>(ref MemoryPackWriter<TBufferWriter> writer, scoped ref ValueTuple<T1?, T2?> value)
     {
-        if (!System.Runtime.CompilerServices.RuntimeHelpers.IsReferenceOrContainsReferences<ValueTuple<T1?, T2?>>())
+        if (Helpers.IsUnmanagedPackableTuple<T1, T2>())
         {
             writer.DangerousWriteUnmanaged(value);
             return;
@@ -396,7 +396,7 @@ public sealed class ValueTupleFormatter<T1, T2> : MemoryPackFormatter<ValueTuple
     [Preserve]
     public override void Deserialize(ref MemoryPackReader reader, scoped ref ValueTuple<T1?, T2?> value)
     {
-        if (!System.Runtime.CompilerServices.RuntimeHelpers.IsReferenceOrContainsReferences<ValueTuple<T1?, T2?>>())
+        if (Helpers.IsUnmanagedPackableTuple<T1, T2>())
         {
             reader.DangerousReadUnmanaged(out value);
             return;
@@ -415,7 +415,7 @@ public sealed class ValueTupleFormatter<T1, T2, T3> : MemoryPackFormatter<ValueT
     [Preserve]
     public override void Serialize<TBufferWriter>(ref MemoryPackWriter<TBufferWriter> writer, scoped ref ValueTuple<T1?, T2?, T3?> value)
     {
-        if (!System.Runtime.CompilerServices.RuntimeHelpers.IsReferenceOrContainsReferences<ValueTuple<T1?, T2?, T3?>>())
+        if (Helpers.IsUnmanagedPackableTuple<T1, T2, T3>())
         {
             writer.DangerousWriteUnmanaged(value);
             return;
@@ -429,7 +429,7 @@ public sealed class ValueTupleFormatter<T1, T2, T3> : MemoryPackFormatter<ValueT
     [Preserve]
     public override void Deserialize(ref MemoryPackReader reader, scoped ref ValueTuple<T1?, T2?, T3?> value)
     {
-        if (!System.Runtime.CompilerServices.RuntimeHelpers.IsReferenceOrContainsReferences<ValueTuple<T1?, T2?, T3?>>())
+        if (Helpers.IsUnmanagedPackableTuple<T1, T2, T3>())
         {
             reader.DangerousReadUnmanaged(out value);
             return;
@@ -449,7 +449,7 @@ public sealed class ValueTupleFormatter<T1, T2, T3, T4> : MemoryPackFormatter<Va
     [Preserve]
     public override void Serialize<TBufferWriter>(ref MemoryPackWriter<TBufferWriter> writer, scoped ref ValueTuple<T1?, T2?, T3?, T4?> value)
     {
-        if (!System.Runtime.CompilerServices.RuntimeHelpers.IsReferenceOrContainsReferences<ValueTuple<T1?, T2?, T3?, T4?>>())
+        if (Helpers.IsUnmanagedPackableTuple<T1, T2, T3, T4>())
         {
             writer.DangerousWriteUnmanaged(value);
             return;
@@ -464,7 +464,7 @@ public sealed class ValueTupleFormatter<T1, T2, T3, T4> : MemoryPackFormatter<Va
     [Preserve]
     public override void Deserialize(ref MemoryPackReader reader, scoped ref ValueTuple<T1?, T2?, T3?, T4?> value)
     {
-        if (!System.Runtime.CompilerServices.RuntimeHelpers.IsReferenceOrContainsReferences<ValueTuple<T1?, T2?, T3?, T4?>>())
+        if (Helpers.IsUnmanagedPackableTuple<T1, T2, T3, T4>())
         {
             reader.DangerousReadUnmanaged(out value);
             return;
@@ -485,7 +485,7 @@ public sealed class ValueTupleFormatter<T1, T2, T3, T4, T5> : MemoryPackFormatte
     [Preserve]
     public override void Serialize<TBufferWriter>(ref MemoryPackWriter<TBufferWriter> writer, scoped ref ValueTuple<T1?, T2?, T3?, T4?, T5?> value)
     {
-        if (!System.Runtime.CompilerServices.RuntimeHelpers.IsReferenceOrContainsReferences<ValueTuple<T1?, T2?, T3?, T4?, T5?>>())
+        if (Helpers.IsUnmanagedPackableTuple<T1, T2, T3, T4, T5>())
         {
             writer.DangerousWriteUnmanaged(value);
             return;
@@ -501,7 +501,7 @@ public sealed class ValueTupleFormatter<T1, T2, T3, T4, T5> : MemoryPackFormatte
     [Preserve]
     public override void Deserialize(ref MemoryPackReader reader, scoped ref ValueTuple<T1?, T2?, T3?, T4?, T5?> value)
     {
-        if (!System.Runtime.CompilerServices.RuntimeHelpers.IsReferenceOrContainsReferences<ValueTuple<T1?, T2?, T3?, T4?, T5?>>())
+        if (Helpers.IsUnmanagedPackableTuple<T1, T2, T3, T4, T5>())
         {
             reader.DangerousReadUnmanaged(out value);
             return;
@@ -523,7 +523,7 @@ public sealed class ValueTupleFormatter<T1, T2, T3, T4, T5, T6> : MemoryPackForm
     [Preserve]
     public override void Serialize<TBufferWriter>(ref MemoryPackWriter<TBufferWriter> writer, scoped ref ValueTuple<T1?, T2?, T3?, T4?, T5?, T6?> value)
     {
-        if (!System.Runtime.CompilerServices.RuntimeHelpers.IsReferenceOrContainsReferences<ValueTuple<T1?, T2?, T3?, T4?, T5?, T6?>>())
+        if (Helpers.IsUnmanagedPackableTuple<T1, T2, T3, T4, T5, T6>())
         {
             writer.DangerousWriteUnmanaged(value);
             return;
@@ -540,7 +540,7 @@ public sealed class ValueTupleFormatter<T1, T2, T3, T4, T5, T6> : MemoryPackForm
     [Preserve]
     public override void Deserialize(ref MemoryPackReader reader, scoped ref ValueTuple<T1?, T2?, T3?, T4?, T5?, T6?> value)
     {
-        if (!System.Runtime.CompilerServices.RuntimeHelpers.IsReferenceOrContainsReferences<ValueTuple<T1?, T2?, T3?, T4?, T5?, T6?>>())
+        if (Helpers.IsUnmanagedPackableTuple<T1, T2, T3, T4, T5, T6>())
         {
             reader.DangerousReadUnmanaged(out value);
             return;
@@ -563,7 +563,7 @@ public sealed class ValueTupleFormatter<T1, T2, T3, T4, T5, T6, T7> : MemoryPack
     [Preserve]
     public override void Serialize<TBufferWriter>(ref MemoryPackWriter<TBufferWriter> writer, scoped ref ValueTuple<T1?, T2?, T3?, T4?, T5?, T6?, T7?> value)
     {
-        if (!System.Runtime.CompilerServices.RuntimeHelpers.IsReferenceOrContainsReferences<ValueTuple<T1?, T2?, T3?, T4?, T5?, T6?, T7?>>())
+        if (Helpers.IsUnmanagedPackableTuple<T1, T2, T3, T4, T5, T6, T7>())
         {
             writer.DangerousWriteUnmanaged(value);
             return;
@@ -581,7 +581,7 @@ public sealed class ValueTupleFormatter<T1, T2, T3, T4, T5, T6, T7> : MemoryPack
     [Preserve]
     public override void Deserialize(ref MemoryPackReader reader, scoped ref ValueTuple<T1?, T2?, T3?, T4?, T5?, T6?, T7?> value)
     {
-        if (!System.Runtime.CompilerServices.RuntimeHelpers.IsReferenceOrContainsReferences<ValueTuple<T1?, T2?, T3?, T4?, T5?, T6?, T7?>>())
+        if (Helpers.IsUnmanagedPackableTuple<T1, T2, T3, T4, T5, T6, T7>())
         {
             reader.DangerousReadUnmanaged(out value);
             return;
@@ -606,7 +606,7 @@ public sealed class ValueTupleFormatter<T1, T2, T3, T4, T5, T6, T7, TRest> : Mem
     [Preserve]
     public override void Serialize<TBufferWriter>(ref MemoryPackWriter<TBufferWriter> writer, scoped ref ValueTuple<T1?, T2?, T3?, T4?, T5?, T6?, T7?, TRest> value)
     {
-        if (!System.Runtime.CompilerServices.RuntimeHelpers.IsReferenceOrContainsReferences<ValueTuple<T1?, T2?, T3?, T4?, T5?, T6?, T7?, TRest>>())
+        if (Helpers.IsUnmanagedPackableTuple<T1, T2, T3, T4, T5, T6, T7, TRest>())
         {
             writer.DangerousWriteUnmanaged(value);
             return;
@@ -625,7 +625,7 @@ public sealed class ValueTupleFormatter<T1, T2, T3, T4, T5, T6, T7, TRest> : Mem
     [Preserve]
     public override void Deserialize(ref MemoryPackReader reader, scoped ref ValueTuple<T1?, T2?, T3?, T4?, T5?, T6?, T7?, TRest> value)
     {
-        if (!System.Runtime.CompilerServices.RuntimeHelpers.IsReferenceOrContainsReferences<ValueTuple<T1?, T2?, T3?, T4?, T5?, T6?, T7?, TRest>>())
+        if (Helpers.IsUnmanagedPackableTuple<T1, T2, T3, T4, T5, T6, T7, TRest>())
         {
             reader.DangerousReadUnmanaged(out value);
             return;

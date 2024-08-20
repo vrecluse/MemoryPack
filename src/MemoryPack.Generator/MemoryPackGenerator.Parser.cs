@@ -55,6 +55,7 @@ public partial class TypeMeta
     public MemberMeta[] Members { get; private set; }
     public bool IsValueType { get; set; }
     public bool IsUnmanagedType { get; }
+    public bool IsPackAsManagedType { get; }
     public bool IsUnion { get; }
     public bool IsRecord { get; }
     public bool IsInterfaceOrAbstract { get; }
@@ -65,7 +66,7 @@ public partial class TypeMeta
     public MethodMeta[] OnDeserialized { get; }
     public (ushort Tag, INamedTypeSymbol Type)[] UnionTags { get; }
     public bool IsUseEmptyConstructor => Constructor == null || Constructor.Parameters.IsEmpty;
-
+    public bool IsUnmanagedPackable => IsUnmanagedType && !IsPackAsManagedType;
     public TypeMeta(INamedTypeSymbol symbol, ReferenceSymbols reference)
     {
         this.reference = reference;
@@ -110,6 +111,7 @@ public partial class TypeMeta
 
         this.IsValueType = symbol.IsValueType;
         this.IsUnmanagedType = symbol.IsUnmanagedType;
+        this.IsPackAsManagedType = symbol.ContainsAttribute(reference.PackAsManagedTypeAttribute);
         this.IsInterfaceOrAbstract = symbol.IsAbstract;
         this.IsUnion = symbol.ContainsAttribute(reference.MemoryPackUnionAttribute);
         this.IsRecord = symbol.IsRecord;
@@ -292,7 +294,7 @@ public partial class TypeMeta
             noError = false;
         }
 
-        if (this.IsUnmanagedType)
+        if (IsUnmanagedPackable)
         {
             var structLayoutFields = this.Symbol.GetAllMembers()
                 .OfType<IFieldSymbol>()
@@ -389,7 +391,7 @@ public partial class TypeMeta
             // diagnostics location should be method identifier
             // however methodsymbol -> methodsyntax is slightly hard so use type identifier instead.
 
-            if (IsUnmanagedType)
+            if (IsUnmanagedPackable)
             {
                 context.ReportDiagnostic(Diagnostic.Create(DiagnosticDescriptors.OnMethodInUnamannagedType, item.GetLocation(syntax), Symbol.Name, item.Name));
                 noError = false;

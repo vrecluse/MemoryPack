@@ -156,3 +156,9 @@ public sealed class GenerateTypeScriptAttribute : Attribute
 
 [AttributeUsage(AttributeTargets.Field | AttributeTargets.Property)]
 public sealed class SuppressDefaultInitializationAttribute : Attribute;
+
+
+[AttributeUsage(AttributeTargets.Struct, AllowMultiple = false)]
+public sealed class PackAsManagedTypeAttribute : Attribute
+{
+}

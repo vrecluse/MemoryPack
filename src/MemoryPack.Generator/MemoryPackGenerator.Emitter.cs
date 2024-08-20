@@ -179,7 +179,7 @@ using MemoryPack;
 
         if (!xmlDocument)
         {
-            if (type.IsUnmanagedType)
+            if (type.IsUnmanagedPackable)
             {
                 sb.Append("GenerateType unmanaged ");
             }
@@ -193,7 +193,7 @@ using MemoryPack;
         else
         {
             sb.AppendLine("/// <remarks>");
-            if (type.IsUnmanagedType)
+            if (type.IsUnmanagedPackable)
             {
                 sb.AppendLine("/// MemoryPack GenerateType: unmanaged<br/>");
             }
@@ -255,7 +255,7 @@ public partial class TypeMeta
 
         var serializeBody = "";
         var deserializeBody = "";
-        if (IsUnmanagedType)
+        if (IsUnmanagedPackable)
         {
             serializeBody = $$"""
         writer.WriteUnmanaged(value);
@@ -297,6 +297,7 @@ public partial class TypeMeta
         };
 
         var nullable = IsValueType ? "" : "?";
+        var asManagedPackable = IsPackAsManagedType ? ", IAsManagedPackable" : "";
 
         string staticRegisterFormatterMethod, staticMemoryPackableMethod, scopedRef, constraint, registerBody, registerT;
         var fixedSizeInterface = "";
@@ -328,7 +329,7 @@ public partial class TypeMeta
             }
 
             var callbackCount = new[] { this.OnSerializing, this.OnSerialized, this.OnDeserialized, this.OnDeserializing }.Select(x => x.Length).Sum();
-            if (fixedSize && GenerateType == GenerateType.Object && !this.IsValueType && callbackCount == 0)
+            if (fixedSize && GenerateType == GenerateType.Object && callbackCount == 0 && (this.IsPackAsManagedType || !this.IsValueType))
             {
                 var sizeOf = string.Join(" + ", Members.Select(x => $"System.Runtime.CompilerServices.Unsafe.SizeOf<{x.MemberType.FullyQualifiedToString()}>()"));
                 var headerPlus = (Members.Length == 0) ? "1" : "1 + ";
@@ -346,7 +347,7 @@ public partial class TypeMeta
             : "Serialize<TBufferWriter>(ref MemoryPackWriter<TBufferWriter>";
 
         writer.AppendLine($$"""
-partial {{classOrStructOrRecord}} {{TypeName}} : IMemoryPackable<{{TypeName}}>{{fixedSizeInterface}}
+partial {{classOrStructOrRecord}} {{TypeName}} : IMemoryPackable<{{TypeName}}>{{fixedSizeInterface}} {{asManagedPackable}}
 {
 {{EmitCustomFormatters()}}
     static partial void StaticConstructor();
